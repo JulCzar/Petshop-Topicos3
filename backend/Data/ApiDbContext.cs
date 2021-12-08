@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using TodoApp.Models;
-using TodoApp.Models.DTOs.Requests;
 
 namespace TodoApp.Data
 {
@@ -15,12 +14,6 @@ namespace TodoApp.Data
     public DbSet<Pet> Pets { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Attendances> Attendances { get; set; }
-    public DbSet<ItemData> Items { get; set; }
-    public DbSet<Customer> Customer { get; set; }
-    public DbSet<Address> Address { get; set; }
-    public DbSet<Image> Image { get; set; }
-    public DbSet<ScheduleType> ScheduleType { get; set; }
-    public DbSet<Schedule> Schedule { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,28 +54,7 @@ namespace TodoApp.Data
         UserId = ADMIN_ID
       });
 
-      modelBuilder.Entity<Image>()
-          .HasOne<Schedule>(s => s.Schedule)
-          .WithMany(g => g.Images)
-          .HasForeignKey(s => s.ScheduleId);
-      modelBuilder.Entity<Schedule>()
-          .HasOne<Customer>(s => s.Customer)
-          .WithMany(g => g.Schedules)
-          .HasForeignKey(s => s.CustomerId);
-      modelBuilder.Entity<Schedule>()
-          .HasOne<Address>(s => s.Address)
-          .WithMany(g => g.Schedules)
-          .HasForeignKey(s => s.AddressId);
-      modelBuilder.Entity<Schedule>()
-          .HasOne<ScheduleType>(s => s.ScheduleType)
-          .WithMany(g => g.Schedules)
-          .HasForeignKey(s => s.ScheduleTypeId);
-      modelBuilder.Entity<Customer>()
-          .HasIndex(u => u.Email)
-          .IsUnique();
-
       modelBuilder.Entity<Pet>().HasOne<Client>(p => p.Client).WithMany(c => c.Pets).HasForeignKey(p => p.ClientId);
-      modelBuilder.Entity<Attendances>().HasOne<Pet>(a => a.Pet).WithMany(p => p.Attendances).HasForeignKey(a => a.PetId);
       modelBuilder.Entity<Client>().HasIndex(p => p.Email).IsUnique();
     }
 

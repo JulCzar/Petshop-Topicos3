@@ -1,13 +1,14 @@
 import { api } from 'src/http';
 import { getConfig } from './getConfig';
-import { PetDto } from './pet';
 
 export interface AttendanceDto {
+  id?: number;
   name: string;
   details: string;
-  value: number;
+  value: string;
+  date: Date;
   petId: number;
-  pet?: PetDto;
+  pet?: any;
 }
 
 export const index = async () => {
@@ -43,7 +44,10 @@ export const create = async (attendance: AttendanceDto) => {
   }
 };
 
-export const update = async (attendanceId: number, attendance: PetDto) => {
+export const update = async (
+  attendanceId: number,
+  attendance: AttendanceDto
+) => {
   try {
     await api.put(`/Attendance/${attendanceId}`, attendance, getConfig());
   } catch (e) {
@@ -52,9 +56,9 @@ export const update = async (attendanceId: number, attendance: PetDto) => {
   }
 };
 
-export const destroy = async (clientId: number) => {
+export const destroy = async (attendance: number) => {
   try {
-    await api.delete(`/Attendance/${clientId}`, getConfig());
+    await api.delete(`/Attendance/${attendance}`, getConfig());
   } catch (e) {
     console.warn(e);
     throw e;

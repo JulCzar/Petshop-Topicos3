@@ -19,33 +19,44 @@ const RegisterService: React.FC = () => {
     initialValues: {
       name: '',
       details: '',
-      value: 0,
+      date: new Date(),
+      value: '',
       pet: {
-        value: -1,
+        value: {
+          id: -1,
+        },
       },
       client: {
         value: -1,
       },
     },
     onSubmit(data) {
-      const { name, details, pet, value } = data;
+      const { name, details, pet, value, date } = data;
 
-      attendance.create({ name, details, value, petId: pet.value }).catch(e => {
-        if (e.request.response.includes('System.InvalidOperationException')) {
-          toast({
-            status: 'success',
-            title: 'Sucesso!',
-            description: 'Cliente Cadastrado',
-          });
-          navigate('/client');
-        } else {
-          toast({
-            status: 'error',
-            title: 'Falha',
-            description: 'Erro ao cadastrar!',
-          });
-        }
-      });
+      attendance
+        .create({
+          name,
+          details,
+          date: new Date(date),
+          value,
+          petId: pet.value.id,
+        })
+        .catch(e => {
+          if (e.request.response.includes('System.InvalidOperationException')) {
+            toast({
+              status: 'success',
+              title: 'Sucesso!',
+              description: 'Cliente Cadastrado',
+            });
+            navigate('/attendances');
+          } else {
+            toast({
+              status: 'error',
+              title: 'Falha',
+              description: 'Erro ao cadastrar!',
+            });
+          }
+        });
     },
   });
 
@@ -69,10 +80,11 @@ const RegisterService: React.FC = () => {
             name='details'
             onChange={formik.handleChange}
           />
+          <Input label='Valor' name='value' onChange={formik.handleChange} />
           <Input
-            type='number'
-            label='Valor'
-            name='value'
+            type='date'
+            label='Data'
+            name='date'
             onChange={formik.handleChange}
           />
           <Select
@@ -90,7 +102,7 @@ const RegisterService: React.FC = () => {
             value={formik.values.pet}
             options={pets
               .filter(p => p.clientId === formik.values.client.value)
-              .map(p => ({ value: p.id, label: p.name }))}
+              .map(p => ({ value: p, label: p.name }))}
             onChange={p => formik.setFieldValue('pet', p)}
           />
         </Box>

@@ -1,6 +1,7 @@
-import { Box, Button, Flex, Spinner, useBoolean } from '@chakra-ui/react';
+import { Box, Button, Flex, useBoolean } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Loading } from 'src/pages';
 import { client } from 'src/services';
 import { ClientDto } from 'src/services/client';
 
@@ -26,7 +27,7 @@ const Clients: React.FC = () => {
       <Button onClick={navigateTo('/client/new')}>Criar Novo</Button>
 
       <Box>
-        {isLoading && <Spinner />}
+        {isLoading && <Loading />}
         {clients.map(i => (
           <Flex
             key={i.cpf + i.id}

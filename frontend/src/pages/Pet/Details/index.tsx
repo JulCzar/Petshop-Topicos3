@@ -35,7 +35,7 @@ const RegisterPet: React.FC = () => {
               title: 'Sucesso!',
               description: 'Cliente Cadastrado',
             });
-            navigate('/client');
+            navigate(`/client/${params.id}`);
           } else {
             toast({
               status: 'error',

@@ -1,11 +1,8 @@
 {
   "folders": [
-	{
-		"path": "frontend"
-	},
-	{
-		"path": "..\\backendPetshop\\Back\\FicticiusEventos"
-	}
-],
+    {
+      "path": "frontend"
+    }
+  ],
   "settings": {}
 }

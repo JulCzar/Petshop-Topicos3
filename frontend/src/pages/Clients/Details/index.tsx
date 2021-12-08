@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { Input, InputMask } from 'src/components';
 import { useLayoutProps, useTitle } from 'src/hooks';
+import { Loading } from 'src/pages';
 import { client, pet } from 'src/services';
 import { ClientDto } from 'src/services/client';
 import { PetDto } from 'src/services/pet';
@@ -76,6 +77,7 @@ const Details: React.FC = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      {isLoading && <Loading />}
       <Flex gridGap={3} direction='column'>
         <Flex direction='column' gridGap={4}>
           <Flex gridGap={4}>

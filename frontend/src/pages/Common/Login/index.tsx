@@ -1,13 +1,15 @@
-import { Box, Button, Flex, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, useBoolean, useToast } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Input, PasswordInput } from 'src/components';
 import { useLayoutProps, useTitle } from 'src/hooks';
+import { Loading } from 'src/pages';
 import { login } from 'src/services';
 
 const Login: React.FC = () => {
   const { setGlobal: setUser, global: user } = useLayoutProps();
+  const [isLoading, loading] = useBoolean(false);
   const navigate = useNavigate();
   const toast = useToast();
   useTitle('Login');
@@ -22,6 +24,7 @@ const Login: React.FC = () => {
       password: '',
     },
     onSubmit(data) {
+      loading.on();
       login(data)
         .then(data => setUser(data))
         .catch(() =>
@@ -29,12 +32,14 @@ const Login: React.FC = () => {
             status: 'error',
             title: 'Houve um problema',
           })
-        );
+        )
+        .finally(loading.off);
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      {isLoading && <Loading />}
       <Flex gridGap={3} direction='column'>
         <Box>
           <Input onChange={formik.handleChange} label='email' name='email' />

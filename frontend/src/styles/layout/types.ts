@@ -18,6 +18,7 @@ export interface User {
 
 export interface LayoutProps {
   setGlobal: Dispatch<SetStateAction<LoginResponse | null>>;
-  setTitle: Dispatch<SetStateAction<ReactNode>>;
+  setTitle: Dispatch<SetStateAction<string>>;
+  title: string;
   global: LoginResponse | null;
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoApp.Data;
 
 namespace TodoApp.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    partial class ApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208033654_updateModels3")]
+    partial class updateModels3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,13 +150,13 @@ namespace TodoApp.Migrations
                         {
                             Id = "02174cf0�9412�4cfe - afbf - 59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a771c834-1c64-416d-bdbe-e3b5f4d0f719",
+                            ConcurrencyStamp = "b6988b90-1628-42a4-b68b-bbb3216982f1",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEB/9D+OpLsQatc6L54C//5dk4PcIzI33QhEiFU8snCzr0hFiZBHYB4EWUkMXrVbVGA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEB079xDnJuDnWeII6DXBuUM8+QOxYuSqEsrW9w7q59XkCoxLOgL22NXeE17I4c8kNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4be60899-d310-4c20-8298-b410a5b126d2",
+                            SecurityStamp = "3445a4c9-e533-4258-97aa-ef2f02c0bf7c",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -251,6 +253,36 @@ namespace TodoApp.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("TodoApp.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("TodoApp.Models.Attendances", b =>
                 {
                     b.Property<int>("Id")
@@ -325,6 +357,98 @@ namespace TodoApp.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("TodoApp.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(55)
+                        .HasColumnType("nvarchar(55)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneAdditional")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.ToTable("Customer");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScheduleId");
+
+                    b.ToTable("Image");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.ItemData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Done")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Items");
+                });
+
             modelBuilder.Entity("TodoApp.Models.Pet", b =>
                 {
                     b.Property<int>("Id")
@@ -361,6 +485,78 @@ namespace TodoApp.Migrations
                     b.HasIndex("ClientId");
 
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.Schedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Price")
+                        .HasColumnType("real");
+
+                    b.Property<int>("ScheduleTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ScheduleTypeId");
+
+                    b.ToTable("Schedule");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.ScheduleType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScheduleType");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,6 +619,15 @@ namespace TodoApp.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TodoApp.Models.Image", b =>
+                {
+                    b.HasOne("TodoApp.Models.Schedule", "Schedule")
+                        .WithMany("Images")
+                        .HasForeignKey("ScheduleId");
+
+                    b.Navigation("Schedule");
+                });
+
             modelBuilder.Entity("TodoApp.Models.Pet", b =>
                 {
                     b.HasOne("TodoApp.Models.Client", "Client")
@@ -432,14 +637,61 @@ namespace TodoApp.Migrations
                     b.Navigation("Client");
                 });
 
+            modelBuilder.Entity("TodoApp.Models.Schedule", b =>
+                {
+                    b.HasOne("TodoApp.Models.Address", "Address")
+                        .WithMany("Schedules")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TodoApp.Models.Customer", "Customer")
+                        .WithMany("Schedules")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TodoApp.Models.ScheduleType", "ScheduleType")
+                        .WithMany("Schedules")
+                        .HasForeignKey("ScheduleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("ScheduleType");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.Address", b =>
+                {
+                    b.Navigation("Schedules");
+                });
+
             modelBuilder.Entity("TodoApp.Models.Client", b =>
                 {
                     b.Navigation("Pets");
                 });
 
+            modelBuilder.Entity("TodoApp.Models.Customer", b =>
+                {
+                    b.Navigation("Schedules");
+                });
+
             modelBuilder.Entity("TodoApp.Models.Pet", b =>
                 {
                     b.Navigation("Attendances");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.Schedule", b =>
+                {
+                    b.Navigation("Images");
+                });
+
+            modelBuilder.Entity("TodoApp.Models.ScheduleType", b =>
+                {
+                    b.Navigation("Schedules");
                 });
 #pragma warning restore 612, 618
         }

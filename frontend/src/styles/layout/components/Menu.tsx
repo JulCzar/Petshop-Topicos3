@@ -12,7 +12,7 @@ const Menu: React.FC<MenuProps> = ({ user }) => {
 
   return (
     <Flex gridGap={3}>
-      <Link to='/attendances'>Agendar Consultas</Link>
+      <Link to='/attendances'>Consultas</Link>
       <Link to='/client'>Clientes</Link>
     </Flex>
   );
