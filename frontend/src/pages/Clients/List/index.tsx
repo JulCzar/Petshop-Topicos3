@@ -1,6 +1,7 @@
 import { Box, Button, Flex, useBoolean } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Table } from 'src/components';
 import { Loading } from 'src/pages';
 import { client } from 'src/services';
 import { ClientDto } from 'src/services/client';
@@ -24,19 +25,22 @@ const Clients: React.FC = () => {
 
   return (
     <Box>
-      <Button onClick={navigateTo('/client/new')}>Criar Novo</Button>
+      <Flex w='full' justify='flex-end' mb='4'>
+        <Button onClick={navigateTo('/client/new')}>Criar Novo</Button>
+      </Flex>
 
       <Box>
         {isLoading && <Loading />}
-        {clients.map(i => (
-          <Flex
-            key={i.cpf + i.id}
-            onClick={navigateTo(`/client/${i.id}`)}
-            gridGap={4}>
-            <Box>{i.name}</Box>
-            <Box>{i.email}</Box>
-          </Flex>
-        ))}
+        <Table
+          header={[{ label: 'Nome' }, { label: 'Email' }]}
+          body={{
+            onRowClick: row =>
+              navigate(
+                `/client/${clients.filter(c => c.name === row[0].item)[0].id}`
+              ),
+            data: clients.map(c => [{ item: c.name }, { item: c.email }]),
+          }}
+        />
       </Box>
     </Box>
   );

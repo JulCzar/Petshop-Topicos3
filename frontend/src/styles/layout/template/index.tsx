@@ -25,7 +25,7 @@ const Template: React.FC = () => {
   };
 
   return (
-    <Container h='full' maxW='none' px='0' overflowY='auto'>
+    <Container h='full' maxW='container.lg' px='0'>
       <Flex direction='column' minH='full'>
         <Flex
           py='4'

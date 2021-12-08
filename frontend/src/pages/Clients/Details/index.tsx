@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
-import { Input, InputMask } from 'src/components';
+import { Input, InputMask, Table } from 'src/components';
 import { useLayoutProps, useTitle } from 'src/hooks';
 import { Loading } from 'src/pages';
 import { client, pet } from 'src/services';
@@ -117,24 +117,27 @@ const Details: React.FC = () => {
             />
           </Flex>
         </Flex>
-        <Flex w='100%' justify='flex-end' gridGap={4}>
+        <Flex w='100%' justify='flex-end' gridGap={4} mb={4}>
           <Button onClick={navigateTo(`/client/${params.id}/pet/new`)}>
             Adicionar Pet
           </Button>
           <Button type='submit'>Salvar Alterações</Button>
         </Flex>
       </Flex>
-      <Box>
-        {pets
-          .filter(p => p.clientId === Number(params.id))
-          .map(p => (
-            <Box
-              onClick={navigateTo(`/client/${params.id}/pet/${p.id}`)}
-              key={p.id}>
-              {p.name}
-            </Box>
-          ))}
-      </Box>
+      <Table
+        header={[{ label: 'Nome' }, { label: 'Raça' }]}
+        body={{
+          onRowClick: row =>
+            navigate(
+              `/client/${params.id}/pet/${
+                pets.filter(c => c.name === row[0].item)[0].id
+              }`
+            ),
+          data: pets
+            .filter(p => p.clientId === Number(params.id))
+            .map(c => [{ item: c.name }, { item: c.breed }]),
+        }}
+      />
     </form>
   );
 };

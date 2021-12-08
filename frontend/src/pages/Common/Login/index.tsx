@@ -1,4 +1,11 @@
-import { Box, Button, Flex, useBoolean, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  useBoolean,
+  useToast,
+} from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -38,22 +45,24 @@ const Login: React.FC = () => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      {isLoading && <Loading />}
-      <Flex gridGap={3} direction='column'>
-        <Box>
-          <Input onChange={formik.handleChange} label='email' name='email' />
-          <PasswordInput
-            onChange={formik.handleChange}
-            label='senha'
-            name='password'
-          />
-        </Box>
-        <Flex w='100%' justify='flex-end'>
-          <Button type='submit'>Entrar</Button>
+    <Container maxW='md'>
+      <form onSubmit={formik.handleSubmit}>
+        {isLoading && <Loading />}
+        <Flex gridGap={3} direction='column'>
+          <Box>
+            <Input onChange={formik.handleChange} label='email' name='email' />
+            <PasswordInput
+              onChange={formik.handleChange}
+              label='senha'
+              name='password'
+            />
+          </Box>
+          <Flex w='100%' justify='flex-end'>
+            <Button type='submit'>Entrar</Button>
+          </Flex>
         </Flex>
-      </Flex>
-    </form>
+      </form>
+    </Container>
   );
 };
 

@@ -107,7 +107,7 @@ const RegisterService: React.FC = () => {
           />
         </Box>
         <Flex w='100%' justify='flex-end'>
-          <Button type='submit'>Cadastrar</Button>
+          <Button type='submit'>Agendar</Button>
         </Flex>
       </Flex>
     </form>
